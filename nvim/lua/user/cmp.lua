@@ -106,6 +106,7 @@ cmp.setup {
         luasnip = "[Snippet]",
         buffer = "[Buffer]",
         path = "[Path]",
+        cmdline = "[LSP]",
       })[entry.source.name]
       return vim_item
     end,
@@ -114,9 +115,9 @@ cmp.setup {
     { name = "nvim_lsp" },
     { name = "luasnip" },
     { name = "buffer" },
-    { name = "dictionary" },
     { name = "path" },
-    -- { name = "cmdline" },
+    { name = "cmdline" }, -- was causing trouble
+    -- { name = "dictionary" },
   },
   confirm_opts = {
     behavior = cmp.ConfirmBehavior.Replace,
@@ -133,30 +134,34 @@ cmp.setup {
   },
 }
 
+-- TODO was trying to get <C-j>, <C-k> to work in the command line
 -- cmp-cmdline
--- `/` cmdline setup.
-cmp.setup.cmdline('/', {
-  mapping = cmp.mapping.preset.cmdline(),
-  sources = {
-    { name = 'buffer' }
-  }
-})
-
--- `:` cmdline setup.
-cmp.setup.cmdline(':', {
-  mapping = cmp.mapping.preset.cmdline(),
-  sources = cmp.config.sources({
-    { name = 'path' }
-  }, {
-    {
-      name = 'cmdline',
-      option = {
-        ignore_cmds = { 'Man', '!' }
-      }
+  -- `/` cmdline setup.
+  cmp.setup.cmdline('/', {
+    mapping = cmp.mapping.preset.cmdline({
+      -- ['<C-j>'] = cmp.mapping(cmp.mapping.select_next_item()),
+      -- ['<C-k>'] = cmp.mapping(cmp.mapping.select_prev_item()),
+      ['<C-y>'] = cmp.config.disable, -- Specify `cmp.config.disable` if you want to remove the default `<C-y>` mapping.
+    }),
+    sources = {
+      { name = 'buffer' }
     }
   })
-})
-
-
-
-
+  -- `:` cmdline setup.
+  cmp.setup.cmdline(':', {
+    mapping = cmp.mapping.preset.cmdline({
+      -- ['<C-j>'] = cmp.mapping(cmp.mapping.select_next_item()),
+      -- ['<C-k>'] = cmp.mapping(cmp.mapping.select_prev_item()),
+      ['<C-y>'] = cmp.config.disable, -- Specify `cmp.config.disable` if you want to remove the default `<C-y>` mapping.
+    }),
+    sources = cmp.config.sources({
+      { name = 'path' }
+    }, {
+      { name = 'cmdline',
+        option = {
+          ignore_cmds = { 'Man', '!' }
+        }
+      },
+      mapping = cmp.mapping.preset.cmdline({}), -- fixes supertab
+    }),
+  })

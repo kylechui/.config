@@ -12,6 +12,7 @@ npairs.setup {
     java = false,
   },
   disable_filetype = { "TelescopePrompt", "spectre_panel" },
+  -- enable_check_bracket_line = false,
   -- fast_wrap = {
   --   map = "<M-e>",
   --   chars = { "{", "[", "(", '"', "'" },
@@ -28,7 +29,6 @@ npairs.setup {
 local Rule = require('nvim-autopairs.rule')
 local npairs = require('nvim-autopairs')
 
--- npairs.add_rule(Rule("$$","$$","tex"))
 npairs.add_rules({
   Rule("$","$","tex"),
   Rule("$ "," ","tex"),
@@ -36,6 +36,18 @@ npairs.add_rules({
   Rule("{ "," ","tex"),
   Rule("( "," ","tex"),
   }
+)
+
+npairs.add_rules({
+  Rule("$$","$$","tex")
+    :with_pair(function(opts)
+        print(vim.inspect(opts))
+        if opts.line=="aa $$" then
+        -- don't add pair on that line
+          return false
+        end
+    end)
+   }
 )
 
 local cmp_autopairs = require "nvim-autopairs.completion.cmp"

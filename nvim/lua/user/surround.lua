@@ -1,21 +1,107 @@
-require("nvim-surround").setup()
-
-local M = {}
-
-M.default_opts = {
-    keymaps = {
-        -- insert = "<C-g>s",
-        -- insert_line = "<C-g>S",
-        normal = "<space>ss",
-        -- normal_cur = "yss",
-        -- normal_line = "yS",
-        -- normal_cur_line = "ySS",
-        visual = "<C-s>",
-        -- visual_line = "gS",
-        delete = "<space>ds",
-        change = "<space>cs",
+require("nvim-surround").setup({
+  keymaps = {
+      insert = false,
+      insert_line = false,
+      normal = false,
+      normal_cur = false,
+      normal_line = false,
+      normal_cur_line = false,
+      visual = "<S-s>",
+      visual_line = false,
+      delete = false,
+      change = false,
+  },
+  aliases = {
+      ["a"] = false,
+      ["b"] = false,
+      ["B"] = false,
+      ["r"] = false,
+      ["q"] = false,
+      ["s"] = false,
+  },
+  surrounds = {
+    ["("] = {
+        add = { "( ", " )" },
+        find = function()
+            return M.get_selection({ motion = "a(" })
+        end,
+        delete = "^(. ?)().-( ?.)()$",
     },
-    surrounds = {
+    [")"] = {
+        add = { "(", ")" },
+        find = function()
+            return M.get_selection({ motion = "a)" })
+        end,
+        delete = "^(.)().-(.)()$",
+    },
+    ["{"] = {
+        add = { "{ ", " }" },
+        find = function()
+            return M.get_selection({ motion = "a{" })
+        end,
+        delete = "^(. ?)().-( ?.)()$",
+    },
+    ["}"] = {
+        add = { "{", "}" },
+        find = function()
+            return M.get_selection({ motion = "a}" })
+        end,
+        delete = "^(.)().-(.)()$",
+    },
+    ["<"] = {
+        add = { "< ", " >" },
+        find = function()
+            return M.get_selection({ motion = "a<" })
+        end,
+        delete = "^(. ?)().-( ?.)()$",
+    },
+    [">"] = {
+        add = { "<", ">" },
+        find = function()
+            return M.get_selection({ motion = "a>" })
+        end,
+        delete = "^(.)().-(.)()$",
+    },
+    ["["] = {
+        add = { "[ ", " ]" },
+        find = function()
+            return M.get_selection({ motion = "a[" })
+        end,
+        delete = "^(. ?)().-( ?.)()$",
+    },
+    ["]"] = {
+        add = { "[", "]" },
+        find = function()
+            return M.get_selection({ motion = "a]" })
+        end,
+        delete = "^(.)().-(.)()$",
+    },
+    ["'"] = {
+        add = { "'", "'" },
+        find = function()
+            return M.get_selection({ motion = "a'" })
+        end,
+        delete = "^(.)().-(.)()$",
+    },
+    ['"'] = {
+        add = { '"', '"' },
+        find = function()
+            return M.get_selection({ motion = 'a"' })
+        end,
+        delete = "^(.)().-(.)()$",
+    },
+    ["`"] = {
+        add = { "`", "`" },
+        find = function()
+            return M.get_selection({ motion = "a`" })
+        end,
+        delete = "^(.)().-(.)()$",
+    },
+  },
+})
+
+
+    -- surrounds = {
         -- ["i"] = {
         --     add = { "\textit{", "}" },
         --     find = function()
@@ -37,83 +123,6 @@ M.default_opts = {
         --     end,
         --     delete = "^(. ?)().-( ?.)()$",
         -- },
-        ["("] = {
-            add = { "( ", " )" },
-            find = function()
-                return M.get_selection({ motion = "a(" })
-            end,
-            delete = "^(. ?)().-( ?.)()$",
-        },
-        [")"] = {
-            add = { "(", ")" },
-            find = function()
-                return M.get_selection({ motion = "a)" })
-            end,
-            delete = "^(.)().-(.)()$",
-        },
-        ["{"] = {
-            add = { "{ ", " }" },
-            find = function()
-                return M.get_selection({ motion = "a{" })
-            end,
-            delete = "^(. ?)().-( ?.)()$",
-        },
-        ["}"] = {
-            add = { "{", "}" },
-            find = function()
-                return M.get_selection({ motion = "a}" })
-            end,
-            delete = "^(.)().-(.)()$",
-        },
-        ["<"] = {
-            add = { "< ", " >" },
-            find = function()
-                return M.get_selection({ motion = "a<" })
-            end,
-            delete = "^(. ?)().-( ?.)()$",
-        },
-        [">"] = {
-            add = { "<", ">" },
-            find = function()
-                return M.get_selection({ motion = "a>" })
-            end,
-            delete = "^(.)().-(.)()$",
-        },
-        ["["] = {
-            add = { "[ ", " ]" },
-            find = function()
-                return M.get_selection({ motion = "a[" })
-            end,
-            delete = "^(. ?)().-( ?.)()$",
-        },
-        ["]"] = {
-            add = { "[", "]" },
-            find = function()
-                return M.get_selection({ motion = "a]" })
-            end,
-            delete = "^(.)().-(.)()$",
-        },
-        ["'"] = {
-            add = { "'", "'" },
-            find = function()
-                return M.get_selection({ motion = "a'" })
-            end,
-            delete = "^(.)().-(.)()$",
-        },
-        ['"'] = {
-            add = { '"', '"' },
-            find = function()
-                return M.get_selection({ motion = 'a"' })
-            end,
-            delete = "^(.)().-(.)()$",
-        },
-        ["`"] = {
-            add = { "`", "`" },
-            find = function()
-                return M.get_selection({ motion = "a`" })
-            end,
-            delete = "^(.)().-(.)()$",
-        },
         -- ["i"] = { -- TODO: Add find/delete/change functions
         --     add = function()
         --         local left_delimiter = M.get_input("Enter the left delimiter: ")
@@ -191,29 +200,29 @@ M.default_opts = {
         --         end,
         --     },
         -- },
-        ["f"] = {
-            add = function()
-                local result = M.get_input("Enter the function name: ")
-                if result then
-                    return { { result .. "(" }, { ")" } }
-                end
-            end,
-            find = function()
-                local selection
-                if vim.g.loaded_nvim_treesitter then
-                    selection = M.get_selection({
-                        query = {
-                            capture = "@call.outer",
-                            type = "textobjects",
-                        },
-                    })
-                end
-                if selection then
-                    return selection
-                end
-                return M.get_selection({ pattern = "[^=%s%(%)]+%b()" })
-            end,
-            delete = "^(.-%()().-(%))()$",
+        -- ["f"] = {
+        --     add = function()
+        --         local result = M.get_input("Enter the function name: ")
+        --         if result then
+        --             return { { result .. "(" }, { ")" } }
+        --         end
+        --     end,
+        --     find = function()
+        --         local selection
+        --         if vim.g.loaded_nvim_treesitter then
+        --             selection = M.get_selection({
+        --                 query = {
+        --                     capture = "@call.outer",
+        --                     type = "textobjects",
+        --                 },
+        --             })
+        --         end
+        --         if selection then
+        --             return selection
+        --         end
+        --         return M.get_selection({ pattern = "[^=%s%(%)]+%b()" })
+        --     end,
+        --     delete = "^(.-%()().-(%))()$",
             --[[ function()
                 local selections
                 if vim.g.loaded_nvim_treesitter then
@@ -234,49 +243,45 @@ M.default_opts = {
                 end
                 return M.get_selections({ char = "f", pattern = "^([^=%s%(%)]+%()().-(%))()$" })
             end, ]]
-            change = {
-                target = "^.-([%w_]+)()%(.-%)()()$",
-                replacement = function()
-                    local result = M.get_input("Enter the function name: ")
-                    if result then
-                        return { { result }, { "" } }
-                    end
-                end,
-            },
-        },
-        invalid_key_behavior = {
-            add = function(char)
-                return { { char }, { char } }
-            end,
-            find = function(char)
-                return M.get_selection({
-                    pattern = vim.pesc(char) .. ".-" .. vim.pesc(char),
-                })
-            end,
-            delete = function(char)
-                return M.get_selections({
-                    char = char,
-                    pattern = "^(.)().-(.)()$",
-                })
-            end,
-            change = {
-                target = function(char)
-                    return M.get_selections({
-                        char = char,
-                        pattern = "^(.)().-(.)()$",
-                    })
-                end,
-            },
-        },
-    },
-    aliases = {
-        ["a"] = ">",
-        ["b"] = ")",
-        ["B"] = "}",
-        ["r"] = "]",
-        ["q"] = { '"', "'", "`" },
-        ["s"] = { "}", "]", ")", ">", '"', "'", "`" },
-    },
+    --         change = {
+    --             target = "^.-([%w_]+)()%(.-%)()()$",
+    --             replacement = function()
+    --                 local result = M.get_input("Enter the function name: ")
+    --                 if result then
+    --                     return { { result }, { "" } }
+    --                 end
+    --             end,
+    --         },
+    --     },
+    --     invalid_key_behavior = {
+    --         add = function(char)
+    --             return { { char }, { char } }
+    --         end,
+    --         find = function(char)
+    --             return M.get_selection({
+    --                 pattern = vim.pesc(char) .. ".-" .. vim.pesc(char),
+    --             })
+    --         end,
+    --         delete = function(char)
+    --             return M.get_selections({
+    --                 char = char,
+    --                 pattern = "^(.)().-(.)()$",
+    --             })
+    --         end,
+    --         change = {
+    --             target = function(char)
+    --                 return M.get_selections({
+    --                     char = char,
+    --                     pattern = "^(.)().-(.)()$",
+    --                 })
+    --             end,
+    --         },
+    --     },
+    -- },
+
+local M = {}
+
+M.default_opts = {
     highlight = {
         duration = 0,
     },
