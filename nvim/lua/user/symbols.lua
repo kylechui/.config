@@ -1,11 +1,11 @@
 -- Only enable `lua-latex-symbols` for `tex` and `plaintex` file types
-require "cmp".setup.filetype({ "tex", "plaintex" }, {
+require ("cmp").setup.filetype({ "tex", "plaintex" }, {
     sources = {
         { name = "lua-latex-symbols"}
     }
 })
 
-require "cmp".setup {
+require ("cmp").setup {
     sources = {
         -- The `cache` option is used to determine whether to generate the list
         -- of symbols every time you start Neovim, or if it should be stored in

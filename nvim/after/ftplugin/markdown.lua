@@ -9,16 +9,16 @@ require("nvim-surround").buffer_setup({
     },
     ["b"] = {
       add = { "**", "**" },
-      find = function()
-          return M.get_selection({ motion = "a**" })
-      end,
+      -- find = function()
+      --     return M.get_selection({ motion = "a**" })
+      -- end,
       delete = "^(**)().-(**)()$",
     },
     ["i"] = {
       add = { "*", "*" },
-      find = function()
-          return M.get_selection({ motion = "a*" })
-      end,
+      -- find = function()
+      --     return M.get_selection({ motion = "a*" })
+      -- end,
       delete = "^(*)().-(*)()$",
     },
   },
